@@ -23,7 +23,24 @@
    - Do any unusual patterns exist? 
       - **Answer:** Yes
    - Did the Google search traffic increase during the month that MercadoLibre released its financial results?
-      - **Answer:** Yes, the median traffic search for may 2020 is higher than the median from accross all other months.
+      - **Answer:** Yes, the median traffic search increased.
+```python
+# Store data in dataframe
+df_mercado_trends = pd.read_csv('google_hourly_search_trends.csv', index_col="Date", parse_dates=True)
+
+# Slice the DataFrame to just the month of May 2020
+df_may_2020 = df_mercado_trends.loc["2020-05"]
+
+# Use hvPlot to visualize the data for May 2020
+df_may_2020.hvplot()
+
+# Calculate the sum of the total search traffic for May 2020
+traffic_may_2020 = df_may_2020.loc["2020-05"].sum()
+
+# Calcluate the monhtly median search traffic across all months 
+# Group the DataFrame by index year and then index month, chain the sum and then the median functions
+median_monthly_traffic = df_mercado_trends["Search Trends"].groupby(by=[df_mercado_trends.index.year, df_mercado_trends.index.month]).median()
+```
 
    ![](./Images/01_2020-05_search_trends.png)
    
