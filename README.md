@@ -290,7 +290,7 @@ mercado_sales_forecast_quarter.sum()
 
 ## Results
 
-**Results:** [MercadoLibre Forecasting Analysis](./mercado_libre_forecast.ipynb)
+**Results:** [Forecasting Analysis](./mercado_libre_forecast.ipynb)
 
 **Resources:** [Resources](./Resources/)
 
