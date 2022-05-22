@@ -258,7 +258,7 @@ figures_mercado_sales = mercado_sales_prophet_model.plot_components(mercado_sale
 - [x] Produce a sales forecast for the finance group. 
    - Give them a number for the expected total sales in the next quarter. 
    - Include the best- and worst-case scenarios to help them make better plans.
-      - **Answer:** The most likely total sales forecast for next quater for the period 2020-07-01 to 2020-09-30 is 4974.633769. The Best Case total sales forecast is 5925.393263. The Worst Case total sales forecast is 4019.320500
+      - **Answer:** The most likely total sales forecast for next quater for the period 2020-07-01 to 2020-09-30 is `4975`. The Best Case total sales forecast is `5925`. The Worst Case total sales forecast is `4019`.
 
 ```python
 # Plot the predictions for the Mercado sales
