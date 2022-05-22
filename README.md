@@ -243,8 +243,6 @@ mercado_sales_prophet_forecast = mercado_sales_prophet_model.predict(mercado_sal
 
 ```
 
-![](./Images/11_mercado_daily_sales.png)
-
 - Interpret the model output to identify any seasonal patterns in the company revenue.       
    - For example, what are the peak revenue days? (Mondays? Fridays? Something else?)
       - **Answer:** Mondays and Wednesdays
