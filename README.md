@@ -3,17 +3,17 @@
 ## Table of Contents
 
 
-1. Part One: Find unusual patterns in hourly Google search traffic.
+1. [Part One: Find unusual patterns in hourly Google search traffic](#part-one-find-unusual-patterns-in-hourly-google-search-traffic)
 
-2. Part Two: Mine the search traffic data for seasonality.
+2. [Part Two: Mine the search traffic data for seasonality](#part-two-mine-the-search-traffic-data-for-seasonality)
 
-3. Part Three: Relate the search traffic to stock price patterns.
+3. [Part Three: Relate the search traffic to stock price patterns](#part-three-relate-the-search-traffic-to-stock-price-patterns)
 
-4. Part Four: Create a time series model by using Prophet.
+4. [Part Four: Create a time series model by using Prophet](#part-four-create-a-time-series-model-by-using-prophet)
 
-5. Part Five (Optional): Forecast the revenue by using time series models.
+5. [Part Five (Optional): Forecast the revenue by using time series models](#part-five-optional-forecast-the-revenue-by-using-time-series-models)
 
-6. Results
+6. [Results](#results)
 
 ## Part One: Find Unusual Patterns in Hourly Google Search Traffic
 
