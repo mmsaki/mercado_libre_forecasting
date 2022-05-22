@@ -297,10 +297,10 @@ mercado_sales_forecast_quarter.sum()
 
 ## Conclusion
 
-You’ll gain proficiency in the following tasks:
+- You’ll gain proficiency in the following tasks:
 
-- Identifying patterns in time series data.
+   - Identifying patterns in time series data.
 
-- Mining for patterns in seasonality by using visualizations.
+   - Mining for patterns in seasonality by using visualizations.
 
-- Building sales-forecast and user-interest predictive models.
+   - Building sales-forecast and user-interest predictive models.
