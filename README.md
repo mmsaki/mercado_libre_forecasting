@@ -23,7 +23,7 @@
    - Do any unusual patterns exist? 
       - **Answer:** Yes
    - Did the Google search traffic increase during the month that MercadoLibre released its financial results?
-      - **Answer:** Yes, the median traffic search for may 2020 is higher than the median from accross all months.
+      - **Answer:** Yes, the median traffic search for may 2020 is higher than the median from accross all other months.
 
    ![](./Images/01_2020-05_search_trends.png)
    
