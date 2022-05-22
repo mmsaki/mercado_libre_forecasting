@@ -30,15 +30,14 @@ You’ll gain proficiency in the following tasks:
 
 ## Part 1: Find Unusual Patterns in Hourly Google Search Traffic
 
-The data science manager asks if the Google search traffic for the company links to any financial events at the company. Or, does the search traffic data just present random noise? To answer this question, you’ll pick out any unusual patterns in the Google search data for the company, and connect them to the corporate financial events.
-
-To do so, complete the following steps:
-
-1. Read the search data into a DataFrame, and then slice the data to just the month of May 2020. (During this month, MercadoLibre released its quarterly financial results.) Use hvPlot to visualize the results. Do any unusual patterns exist?
+- Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
+   - During this month, MercadoLibre released its quarterly financial results. 
+   - Use hvPlot to visualize the results. Do any unusual patterns exist?
 
 ![](./Images/01_2020-05_search_trends.png)
 
-2. Calculate the total search traffic for the month, and then compare the value to the monthly median across all months. Did the Google search traffic increase during the month that MercadoLibre released its financial results?
+- Calculate the total search traffic for the month, and then compare the value to the monthly median across all months. 
+- Did the Google search traffic increase during the month that MercadoLibre released its financial results?
 
 **Answer:** Yes, the median traffic search for may 2020 increased. 54.0 > 51.0
 
@@ -84,17 +83,9 @@ To do so, complete the following steps:
 
 4. Review the time series correlation, and then answer the following question: Does a predictable relationship exist between the lagged search traffic and the stock volatility or between the lagged search traffic and the stock price returns?
 
-![](./Images/lagged_trends_correlation.png)
-
-Search Trends|	close|	Lagged Search Trends|	Stock Volatility|	Hourly Stock Return|
-|---|---|---|---|---|
-**Search Trends**|	1.000000|	0.012193|	0.384292|	-0.172826|	-0.029899|
-**close**|	0.012193|	1.000000|	0.012135|	0.131696|	0.022796|
-**Lagged Search Trends**|	0.384292|	0.012135|	1.000000|	-0.148938|	0.017929|
-**Stock Volatility**|	-0.172826|	0.131696|	-0.148938|	1.000000|	0.061424|
-**Hourly Stock Return**|	-0.029899|	0.022796	0.017929|	0.061424|	1.000000|
-
 **Answer:** The lagged search traffic has a negative correlation with stock volatility, but it has positive correlation with hourly stock returns.
+
+![](./Images/lagged_trends_correlation.png)
 
 ## Part 4: Create a Time Series Model by Using Prophet
 
