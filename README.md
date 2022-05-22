@@ -177,7 +177,7 @@ model_mercado_trend.plot(forecast_mercado_trends)
 ```
 
 - How's the near-term forecast for the popularity of MercadoLibre?
-   - **Answer:** According to the prediction the near-term forecast popularity is decreasing
+   - **Answer:** Decreasing near-term
 
 ![](./Images/08_mercado_model_trend.png)
 
