@@ -90,48 +90,52 @@ df_mercado_trends.groupby(group_level_week_num).mean().hvplot(title="Average sea
 
 - [x] Read in and plot the stock price data. 
    - Concatenate the stock price data to the search data in a single DataFrame
-   ```python
-   # Store data in dataframe
-   df_mercado_stock = pd.read_csv("mercado_stock_price.csv", index_col="date", parse_dates=True)
-   df_mercado_stock.index = pd.to_datetime(df_mercado_stock.index, infer_datetime_format = True)
 
-   # Concatenate the df_mercado_stock DataFrame with the df_mercado_trends DataFrame
-   # Concatenate the DataFrame by columns (axis=1), and drop and rows with only one column of data
-   mercado_stock_trends_df = pd.concat([df_mercado_trends, df_mercado_stock], axis=1).dropna()
-   ```
+```python
+# Store data in dataframe
+df_mercado_stock = pd.read_csv("mercado_stock_price.csv", index_col="date", parse_dates=True)
+df_mercado_stock.index = pd.to_datetime(df_mercado_stock.index, infer_datetime_format = True)
+
+# Concatenate the df_mercado_stock DataFrame with the df_mercado_trends DataFrame
+# Concatenate the DataFrame by columns (axis=1), and drop and rows with only one column of data
+mercado_stock_trends_df = pd.concat([df_mercado_trends, df_mercado_stock], axis=1).dropna()
+```
+
 - [x] Slice the data to just the first half of 2020, `2020-01` to `2020-06` in the DataFrame, and then use hvPlot to plot the data. 
    - Do both time series indicate a common trend that’s consistent with this narrative?
       - **Answer:** Yes, there is a trend consisent with the narative. Market events emerged during the year of 2020 that many companies found difficult. But, after the initial shock to global financial markets, new customers and revenue increased for e-commerce platforms.
-   ```python
-   # For the combined dataframe, slice to just the first half of 2020 (2020-01 through 2020-06) 
-   first_half_2020 = mercado_stock_trends_df.loc["2020-01":"2020-06"]
 
-   # Use hvPlot to visualize the close and Search Trends data
-   # Plot each column on a separate axes
-   first_half_2020.hvplot(shared_axes=False, subplots=True).cols(1)
-   ```
+```python
+# For the combined dataframe, slice to just the first half of 2020 (2020-01 through 2020-06) 
+first_half_2020 = mercado_stock_trends_df.loc["2020-01":"2020-06"]
+
+# Use hvPlot to visualize the close and Search Trends data
+# Plot each column on a separate axes
+first_half_2020.hvplot(shared_axes=False, subplots=True).cols(1)
+```
 
 ![](./Images/06_search_trends_and_close_price.png)
 
 - [x] Create a new column in the DataFrame named “Lagged Search Trends” that offsets, or shifts, the search traffic by one hour. 
-   ```python
-   # This column should shift the Search Trends information by one hour
-   mercado_stock_trends_df['Lagged Search Trends'] = mercado_stock_trends_df['Search Trends'].shift(periods=1)
-   ```
 
-   - [x] “Stock Volatility”, which holds an exponentially weighted four-hour rolling average of the company’s stock volatility
+```python
+# This column should shift the Search Trends information by one hour
+mercado_stock_trends_df['Lagged Search Trends'] = mercado_stock_trends_df['Search Trends'].shift(periods=1)
+```
 
-   ```python
-   # This column should calculate the standard deviation of the closing stock price return data over a 4 period rolling window
-   mercado_stock_trends_df['Stock Volatility'] = mercado_stock_trends_df['close'].pct_change().rolling(4).std()
-   ```
+- [x] “Stock Volatility”, which holds an exponentially weighted four-hour rolling average of the company’s stock volatility
 
-   - [x] “Hourly Stock Return”, which holds the percentage of change in the company stock price on an hourly basis
+```python
+# This column should calculate the standard deviation of the closing stock price return data over a 4 period rolling window
+mercado_stock_trends_df['Stock Volatility'] = mercado_stock_trends_df['close'].pct_change().rolling(4).std()
+```
 
-   ```python
-   # This column should calculate hourly return percentage of the closing price
-   mercado_stock_trends_df['Hourly Stock Return'] = mercado_stock_trends_df['close'].pct_change()
-   ```
+- [x] “Hourly Stock Return”, which holds the percentage of change in the company stock price on an hourly basis
+
+```python
+# This column should calculate hourly return percentage of the closing price
+mercado_stock_trends_df['Hourly Stock Return'] = mercado_stock_trends_df['close'].pct_change()
+```
 
 - [x] Review the time series correlation, and then answer the following question: 
    - Does a predictable relationship exist between the lagged search traffic and the stock volatility or between the lagged search traffic and the stock price returns?
@@ -188,21 +192,21 @@ model_mercado_trend.plot(forecast_mercado_trends)
    - What's the lowest point for search traffic in the calendar year?
       - **Answer:** October - November
 
-   ```python
-   # Set the index in the forecast_mercado_trends DataFrame to the ds datetime column
-   forecast_mercado_trends = forecast_mercado_trends.set_index("ds")
+```python
+# Set the index in the forecast_mercado_trends DataFrame to the ds datetime column
+forecast_mercado_trends = forecast_mercado_trends.set_index("ds")
 
-   # From the forecast_mercado_trends DataFrame, use hvPlot to visualize
-   #  the yhat, yhat_lower, and yhat_upper columns over the last 2000 hours 
-   forecast_mercado_trends[["yhat", "yhat_lower", "yhat_upper"]].iloc[-2000:,:].hvplot()
+# From the forecast_mercado_trends DataFrame, use hvPlot to visualize
+#  the yhat, yhat_lower, and yhat_upper columns over the last 2000 hours 
+forecast_mercado_trends[["yhat", "yhat_lower", "yhat_upper"]].iloc[-2000:,:].hvplot()
 
-   # Reset the index in the forecast_mercado_trends DataFrame
-   forecast_mercado_trends = forecast_mercado_trends.reset_index()
+# Reset the index in the forecast_mercado_trends DataFrame
+forecast_mercado_trends = forecast_mercado_trends.reset_index()
 
-   # Use the plot_components function to visualize the forecast results 
-   # for the forecast_mercado DataFrame 
-   figures_mercado_trends = model_mercado_trend.plot_components(forecast_mercado_trends)
-   ```
+# Use the plot_components function to visualize the forecast results 
+# for the forecast_mercado DataFrame 
+figures_mercado_trends = model_mercado_trend.plot_components(forecast_mercado_trends)
+```
    ![](./Images/10_mercado_trends_plot.png)
 
 ## Part Five (Optional): Forecast the Revenue by Using Time Series Models
@@ -293,9 +297,7 @@ mercado_sales_forecast_quarter.sum()
 **Resources:** [Resources](./Resources/)
 
 
-## Background Story
-
-- You’re a growth analyst at [MercadoLibre](http://investor.mercadolibre.com/investor-relations). With over 200 million users, MercadoLibre is the most popular e-commerce site in Latin America. You've been tasked with analyzing the company's financial and user data in clever ways to help the company grow. So, you want to find out if the ability to predict search traffic can translate into the ability to successfully trade the stock.
+## Final Outcome
 
 You’ll gain proficiency in the following tasks:
 
