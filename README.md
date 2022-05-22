@@ -15,18 +15,6 @@
 
 6. Results
 
-## Background
-
-You’re a growth analyst at [MercadoLibre](http://investor.mercadolibre.com/investor-relations). With over 200 million users, MercadoLibre is the most popular e-commerce site in Latin America. You've been tasked with analyzing the company's financial and user data in clever ways to help the company grow. So, you want to find out if the ability to predict search traffic can translate into the ability to successfully trade the stock.
-
-You’ll gain proficiency in the following tasks:
-
-- Identifying patterns in time series data.
-
-- Mining for patterns in seasonality by using visualizations.
-
-- Building sales-forecast and user-interest predictive models.
-
 ## Part One: Find Unusual Patterns in Hourly Google Search Traffic
 
 - [x] Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
@@ -196,6 +184,19 @@ df_mercado_trends.groupby(group_level_weeks).mean().hvplot(title = "Average Goog
 
 ## Results
 
-**File:** [MercadoLibre Forecasting Analysis](./mercado_libre_forecast.ipynb)
+**Results:** [MercadoLibre Forecasting Analysis](./mercado_libre_forecast.ipynb)
 
 **Resources:** [Resources](./Resources/)
+
+
+## Background Story
+
+- You’re a growth analyst at [MercadoLibre](http://investor.mercadolibre.com/investor-relations). With over 200 million users, MercadoLibre is the most popular e-commerce site in Latin America. You've been tasked with analyzing the company's financial and user data in clever ways to help the company grow. So, you want to find out if the ability to predict search traffic can translate into the ability to successfully trade the stock.
+
+You’ll gain proficiency in the following tasks:
+
+- Identifying patterns in time series data.
+
+- Mining for patterns in seasonality by using visualizations.
+
+- Building sales-forecast and user-interest predictive models.
