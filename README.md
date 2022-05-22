@@ -1,4 +1,4 @@
-# Using Prophet for Forecasting MercadoLibre
+# Prophet Forecasting for MercadoLibre
 
 ## Table of Contents
 
