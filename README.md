@@ -291,7 +291,7 @@ mercado_sales_forecast_quarter.sum()
 
 ## Conclusion
 
-- You’ll gain proficiency in the following tasks:
+- This project accomplishes the following tasks:
 
    - Identifying patterns in time series data.
 
