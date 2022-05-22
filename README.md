@@ -13,9 +13,9 @@
 
 5. [Part Five (Optional): Forecast the revenue by using time series models](#part-five-optional-forecast-the-revenue-by-using-time-series-models)
 
-6. [Results](#results)
+6. [Conclusion](#conclusion)
 
-7. [Conclusion](#conclusion)
+7. [Results](#results)
 
 ## Part One: Find Unusual Patterns in Hourly Google Search Traffic
 
@@ -287,14 +287,6 @@ mercado_sales_forecast_quarter.sum()
 
 ![](./Images/13_mercado_forecast_plot.png)
 
-
-## Results
-
-**Results:** [Forecasting Analysis](./mercado_libre_forecast.ipynb)
-
-**Resources:** [Resources](./Resources/)
-
-
 ## Conclusion
 
 - You’ll gain proficiency in the following tasks:
@@ -304,3 +296,9 @@ mercado_sales_forecast_quarter.sum()
    - Mining for patterns in seasonality by using visualizations.
 
    - Building sales-forecast and user-interest predictive models.
+
+## Results
+
+**Results:** [Forecasting Analysis](./mercado_libre_forecast.ipynb)
+
+**Resources:** [Resources](./Resources/)
