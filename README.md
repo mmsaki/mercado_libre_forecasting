@@ -15,6 +15,8 @@
 
 6. [Results](#results)
 
+7. [Conclusion](#conclusion)
+
 ## Part One: Find Unusual Patterns in Hourly Google Search Traffic
 
 - [x] Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
@@ -293,7 +295,7 @@ mercado_sales_forecast_quarter.sum()
 **Resources:** [Resources](./Resources/)
 
 
-## Final Outcome
+## Conclusion
 
 You’ll gain proficiency in the following tasks:
 
