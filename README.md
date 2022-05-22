@@ -3,15 +3,15 @@
 ## Table of Contents
 
 
-1. Find unusual patterns in hourly Google search traffic.
+1. Part One: Find unusual patterns in hourly Google search traffic.
 
-2. Mine the search traffic data for seasonality.
+2. Part Two: Mine the search traffic data for seasonality.
 
-3. Relate the search traffic to stock price patterns.
+3. Part Three: Relate the search traffic to stock price patterns.
 
-4. Create a time series model by using Prophet.
+4. Part Four: Create a time series model by using Prophet.
 
-5. Forecast the revenue by using time series models.
+5. Part Five (Optional): Forecast the revenue by using time series models.
 
 6. Results
 
@@ -27,7 +27,7 @@ You’ll gain proficiency in the following tasks:
 
 - Building sales-forecast and user-interest predictive models.
 
-## Part 1: Find Unusual Patterns in Hourly Google Search Traffic
+## Part One: Find Unusual Patterns in Hourly Google Search Traffic
 
 - [x] Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
    - During this month, MercadoLibre released its quarterly financial results. 
@@ -38,11 +38,15 @@ You’ll gain proficiency in the following tasks:
 
    ![](./Images/01_2020-05_search_trends.png)
    
-## Part 2: Mine the Search Traffic Data for Seasonality
+## Part Two: Mine the Search Traffic Data for Seasonality
 
 - [x] Group the hourly search data to plot the average traffic by the day of the week for example, Monday vs. Friday.
 
-![](./Images/02_avg_google_search_trends_grouped_by_dayofweek.png)
+```python
+# Group the hourly search data to plot (use hvPlot) the average traffic by the day of week 
+group_level_weeks = df_mercado_trends.index.dayofweek
+df_mercado_trends.groupby(group_level_weeks).mean().hvplot(title = "Average Google search traffic grouped by day of week")
+```
 
 - [x] Using hvPlot, visualize this traffic as a heatmap, referencing `index.hour` for the x-axis and `index.dayofweek` for the y-axis. 
    - Does any day-of-week effect that you observe concentrate in just a few hours of that day? 
@@ -55,19 +59,34 @@ You’ll gain proficiency in the following tasks:
 
 ![](./Images/04_avg_traffic_grouped_by_week_of_year.png)
 
-## Part 3: Relate the Search Traffic to Stock Price Patterns
+## Part Three: Relate the Search Traffic to Stock Price Patterns
 
-- [x] Read in and plot the stock price data. Concatenate the stock price data to the search data in a single DataFrame, use hvplot to plot historical closing price.
-
-![](./Images/05_historical_mercado_closing_price.png)
-
+- [x] Read in and plot the stock price data. 
+   - Concatenate the stock price data to the search data in a single DataFrame
+   ```python
+   # Concatenate the df_mercado_stock DataFrame with the df_mercado_trends DataFrame
+   # Concatenate the DataFrame by columns (axis=1), and drop and rows with only one column of data
+   mercado_stock_trends_df = pd.concat([df_mercado_trends, df_mercado_stock], axis=1).dropna()
+   ```
 - [x] Slice the data to just the first half of 2020, `2020-01` to `2020-06` in the DataFrame, and then use hvPlot to plot the data. 
    - Do both time series indicate a common trend that’s consistent with this narrative?
       - **Answer:** Yes, there is a trend consisent with the narative. Market events emerged during the year of 2020 that many companies found difficult. But, after the initial shock to global financial markets, new customers and revenue increased for e-commerce platforms.
+   ```python
+   # For the combined dataframe, slice to just the first half of 2020 (2020-01 through 2020-06) 
+   first_half_2020 = mercado_stock_trends_df.loc["2020-01":"2020-06"]
+   # Use hvPlot to visualize the close and Search Trends data
+   # Plot each column on a separate axes using the following syntax
+   # `hvplot(shared_axes=False, subplots=True).cols(1)`
+   first_half_2020.hvplot(shared_axes=False, subplots=True).cols(1)
+   ```
 
 ![](./Images/06_search_trends_and_close_price.png)
 
-3. Create a new column in the DataFrame named “Lagged Search Trends” that offsets, or shifts, the search traffic by one hour. Create two additional columns:
+- [x] Create a new column in the DataFrame named “Lagged Search Trends” that offsets, or shifts, the search traffic by one hour. 
+   ```python
+   # This column should shift the Search Trends information by one hour
+   mercado_stock_trends_df['Lagged Search Trends'] = mercado_stock_trends_df['Search Trends'].shift(periods=1)
+   ```
 
    - [x] “Stock Volatility”, which holds an exponentially weighted four-hour rolling average of the company’s stock volatility
 
@@ -76,64 +95,100 @@ You’ll gain proficiency in the following tasks:
    mercado_stock_trends_df['Stock Volatility'] = mercado_stock_trends_df['close'].pct_change().rolling(4).std()
    ```
 
-   ![](./Images/07_stock_volatility.png)
-
    - [x] “Hourly Stock Return”, which holds the percentage of change in the company stock price on an hourly basis
    ```python
    # This column should calculate hourly return percentage of the closing price
    mercado_stock_trends_df['Hourly Stock Return'] = mercado_stock_trends_df['close'].pct_change()
    ```
 
-4. Review the time series correlation, and then answer the following question: Does a predictable relationship exist between the lagged search traffic and the stock volatility or between the lagged search traffic and the stock price returns?
-
-**Answer:** The lagged search traffic has a negative correlation with stock volatility, but it has positive correlation with hourly stock returns.
+- [x] Review the time series correlation, and then answer the following question: 
+   - Does a predictable relationship exist between the lagged search traffic and the stock volatility or between the lagged search traffic and the stock price returns?
+      - **Answer:** The lagged search traffic has a negative correlation with stock volatility, but it has positive correlation with hourly stock returns.
 
 ![](./Images/lagged_trends_correlation.png)
 
-## Part 4: Create a Time Series Model by Using Prophet
+## Part Four: Create a Time Series Model by Using Prophet
 
-Now, you need to produce a time series model that analyzes and forecasts patterns in the hourly search data. To do so, complete the following steps:
+- Set up the Google search data for a Prophet forecasting model.
+   - After estimating the model, plot the forecast. 
+   
+   ```pyhton
+   # Using the df_mercado_trends DataFrame, reset the index so the date information is no longer the index
+   mercado_prophet_df = df_mercado_trends.sort_index()
+   mercado_prophet_df = df_mercado_trends.reset_index()
 
-1. Set up the Google search data for a Prophet forecasting model.
+   # Label the columns ds and y so that the syntax is recognized by Prophet
+   mercado_prophet_df.columns = ["ds", "y"]
 
-2. After estimating the model, plot the forecast. How's the near-term forecast for the popularity of MercadoLibre?
+   # Drop an NaN values from the prophet_df DataFrame
+   mercado_prophet_df = mercado_prophet_df.dropna()
+
+   # Call the Prophet function, store as an object
+   model_mercado_trend = Prophet()
+
+   # Fit the time-series model.
+   model_mercado_trend.fit(mercado_prophet_df)
+
+   # Create a future dataframe to hold predictions
+   # Make the prediction go out as far as 2000 hours (approx 80 days)
+   future_mercado_trends = model_mercado_trend.make_future_dataframe(periods=2000, freq="H")
+
+   # Make the predictions for the trend data using the future_mercado_trends DataFrame
+   forecast_mercado_trends = model_mercado_trend.predict(future_mercado_trends)
+
+   # Plot the Prophet predictions for the Mercado trends data
+   model_mercado_trend.plot(forecast_mercado_trends)
+   ```
+
+   - How's the near-term forecast for the popularity of MercadoLibre?
+      - **Answer:** According to the prediction the near-term forecast popularity is decreasing
 
 ![](./Images/08_mercado_model_trend.png)
 
-3. Plot the individual time series components of the model to answer the following questions:
-
-![](./Images/10_mercado_trends_plot.png)
+- [x] Plot the individual time series components of the model to answer the following questions:
 
    - What time of day exhibits the greatest popularity?
-   **Answer:** 00:00 Midnight
+      - **Answer:** 00:00 Midnight
 
    - Which day of the week gets the most search traffic?
-   **Answer:** # Tuesday
+      - **Answer:** # Tuesday
 
    - What's the lowest point for search traffic in the calendar year?
-**Answer:** October - November
+      - **Answer:** October - November
 
-## Part 5 (Optional): Forecast the Revenue by Using Time Series Models
+   ```python
+   # Set the index in the forecast_mercado_trends DataFrame to the ds datetime column
+   forecast_mercado_trends = forecast_mercado_trends.set_index("ds")
 
-A few weeks after your initial analysis, the finance group follows up to find out if you can help them solve a different problem. Your fame as a growth analyst in the company continues to grow!
+   # From the forecast_mercado_trends DataFrame, use hvPlot to visualize
+   #  the yhat, yhat_lower, and yhat_upper columns over the last 2000 hours 
+   forecast_mercado_trends[["yhat", "yhat_lower", "yhat_upper"]].iloc[-2000:,:].hvplot()
 
-Specifically, the finance group wants a forecast of the total sales for the next quarter. This will dramatically increase their ability to both plan budgets and help guide expectations for the company investors.
+   # Reset the index in the forecast_mercado_trends DataFrame
+   forecast_mercado_trends = forecast_mercado_trends.reset_index()
 
-To do so, complete the following steps:
+   # Use the plot_components function to visualize the forecast results 
+   # for the forecast_mercado DataFrame 
+   figures_mercado_trends = model_mercado_trend.plot_components(forecast_mercado_trends)
+   ```
+   ![](./Images/10_mercado_trends_plot.png)
 
-1. Read in the daily historical sales (that is, revenue) figures, and then apply a Prophet model to the data.
+## Part Five (Optional): Forecast the Revenue by Using Time Series Models
+
+- [x] Read in the daily historical sales that revenue figures, and then apply a Prophet model to the data.
 
 ![](./Images/11_mercado_daily_sales.png)
 
-2. Interpret the model output to identify any seasonal patterns in the company revenue. For example, what are the peak revenue days? (Mondays? Fridays? Something else?)
-
-**Answer:** Mondays and Wednesdays
+- Interpret the model output to identify any seasonal patterns in the company revenue.       
+   - For example, what are the peak revenue days? (Mondays? Fridays? Something else?)
+      - **Answer:** Mondays and Wednesdays
 
 ![](./Images/12_mercado_sales_forecast.png)
 
-3. Produce a sales forecast for the finance group. Give them a number for the expected total sales in the next quarter. Include the best- and worst-case scenarios to help them make better plans.
-
-**Answer:** The most likely total sales forecast for next quater for the period 2020-07-01 to 2020-09-30 is 4974.633769. The Best Case total sales forecast is 5925.393263. The Worst Case total sales forecast is 4019.320500
+- [x] Produce a sales forecast for the finance group. 
+   - Give them a number for the expected total sales in the next quarter. 
+   - Include the best- and worst-case scenarios to help them make better plans.
+      - **Answer:** The most likely total sales forecast for next quater for the period 2020-07-01 to 2020-09-30 is 4974.633769. The Best Case total sales forecast is 5925.393263. The Worst Case total sales forecast is 4019.320500
 
 ![](./Images/13_mercado_forecast_plot.png)
 
