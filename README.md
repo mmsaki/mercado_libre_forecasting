@@ -105,10 +105,9 @@ df_mercado_trends.groupby(group_level_week_num).mean().hvplot(title="Average sea
    ```python
    # For the combined dataframe, slice to just the first half of 2020 (2020-01 through 2020-06) 
    first_half_2020 = mercado_stock_trends_df.loc["2020-01":"2020-06"]
-   
+
    # Use hvPlot to visualize the close and Search Trends data
-   # Plot each column on a separate axes using the following syntax
-   # `hvplot(shared_axes=False, subplots=True).cols(1)`
+   # Plot each column on a separate axes
    first_half_2020.hvplot(shared_axes=False, subplots=True).cols(1)
    ```
 
