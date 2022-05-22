@@ -2,7 +2,6 @@
 
 ## Table of Contents
 
-0. Background Story
 
 1. Find unusual patterns in hourly Google search traffic.
 
@@ -16,7 +15,7 @@
 
 6. Results
 
-## Background Story
+## Background
 
 You’re a growth analyst at [MercadoLibre](http://investor.mercadolibre.com/investor-relations). With over 200 million users, MercadoLibre is the most popular e-commerce site in Latin America. You've been tasked with analyzing the company's financial and user data in clever ways to help the company grow. So, you want to find out if the ability to predict search traffic can translate into the ability to successfully trade the stock.
 
@@ -30,16 +29,14 @@ You’ll gain proficiency in the following tasks:
 
 ## Part 1: Find Unusual Patterns in Hourly Google Search Traffic
 
-- Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
+- [x] Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
    - During this month, MercadoLibre released its quarterly financial results. 
-   - Use hvPlot to visualize the results. Do any unusual patterns exist?
+   - Use hvPlot to visualize the results. Do any unusual patterns exist? 
+      - **Answer:** Yes
+   - Did the Google search traffic increase during the month that MercadoLibre released its financial results?
+      - **Answer:** Yes, the median traffic search for may 2020 is higher than the median from accross all months.
 
 ![](./Images/01_2020-05_search_trends.png)
-
-- Calculate the total search traffic for the month, and then compare the value to the monthly median across all months. 
-- Did the Google search traffic increase during the month that MercadoLibre released its financial results?
-
-**Answer:** Yes, the median traffic search for may 2020 increased. 54.0 > 51.0
 
 ## Part 2: Mine the Search Traffic Data for Seasonality
 
