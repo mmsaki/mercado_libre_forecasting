@@ -31,7 +31,8 @@ You’ll gain proficiency in the following tasks:
 
 - [x] Read the search data into a DataFrame, and then slice the data to just the month of May 2020. 
    - During this month, MercadoLibre released its quarterly financial results. 
-   - Use hvPlot to visualize the results. Do any unusual patterns exist? 
+   - Use hvPlot to visualize the results. 
+   - Do any unusual patterns exist? 
       - **Answer:** Yes
    - Did the Google search traffic increase during the month that MercadoLibre released its financial results?
       - **Answer:** Yes, the median traffic search for may 2020 is higher than the median from accross all months.
