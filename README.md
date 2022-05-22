@@ -244,8 +244,8 @@ mercado_sales_prophet_forecast = mercado_sales_prophet_model.predict(mercado_sal
 ```
 
 - Interpret the model output to identify any seasonal patterns in the company revenue.       
-   - For example, what are the peak revenue days? (Mondays? Fridays? Something else?)
-      - **Answer:** Mondays and Wednesdays
+   - For example, what are the peak revenue days?
+      - **Answer:** Mondays - Wednesdays
 
 ```python
 # Use the plot_components function to analyze seasonal patterns in the company's revenue
