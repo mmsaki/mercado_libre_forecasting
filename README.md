@@ -96,8 +96,7 @@ df_mercado_trends.groupby(group_level_week_num).mean().hvplot(title="Average sea
 df_mercado_stock = pd.read_csv("mercado_stock_price.csv", index_col="date", parse_dates=True)
 df_mercado_stock.index = pd.to_datetime(df_mercado_stock.index, infer_datetime_format = True)
 
-# Concatenate the df_mercado_stock DataFrame with the df_mercado_trends DataFrame
-# Concatenate the DataFrame by columns (axis=1), and drop and rows with only one column of data
+# Concatenate the df_mercado_stock DataFrame with the df_mercado_trends DataFrame by columns (axis=1), and drop and rows with only one column of data
 mercado_stock_trends_df = pd.concat([df_mercado_trends, df_mercado_stock], axis=1).dropna()
 ```
 
@@ -196,15 +195,13 @@ model_mercado_trend.plot(forecast_mercado_trends)
 # Set the index in the forecast_mercado_trends DataFrame to the ds datetime column
 forecast_mercado_trends = forecast_mercado_trends.set_index("ds")
 
-# From the forecast_mercado_trends DataFrame, use hvPlot to visualize
-#  the yhat, yhat_lower, and yhat_upper columns over the last 2000 hours 
+# From the forecast_mercado_trends DataFrame, use hvPlot to visualize the yhat, yhat_lower, and yhat_upper columns over the last 2000 hours 
 forecast_mercado_trends[["yhat", "yhat_lower", "yhat_upper"]].iloc[-2000:,:].hvplot()
 
 # Reset the index in the forecast_mercado_trends DataFrame
 forecast_mercado_trends = forecast_mercado_trends.reset_index()
 
-# Use the plot_components function to visualize the forecast results 
-# for the forecast_mercado DataFrame 
+# Use the plot_components function to visualize the forecast results for the forecast_mercado DataFrame 
 figures_mercado_trends = model_mercado_trend.plot_components(forecast_mercado_trends)
 ```
    ![](./Images/10_mercado_trends_plot.png)
@@ -267,17 +264,13 @@ mercado_sales_prophet_model.plot(mercado_sales_prophet_forecast)
 # For the mercado_sales_prophet_forecast DataFrame, set the ds column as the DataFrame Index
 mercado_sales_prophet_forecast = mercado_sales_prophet_forecast.set_index("ds")
 
-# Produce a sales forecast for the finance division
-# giving them a number for expected total sales next quarter.
-# Provide best case (yhat_upper), worst case (yhat_lower), and most likely (yhat) scenarios.
+# The DataFrame should include the columns yhat_upper, yhat_lower, and yhat
 mercado_sales_prophet_forecast = mercado_sales_prophet_forecast[["yhat", "yhat_upper", "yhat_lower"]]
 
 # Create a forecast_quarter Dataframe for the period 2020-07-01 to 2020-09-30
-# The DataFrame should include the columns yhat_upper, yhat_lower, and yhat
 mercado_sales_forecast_quarter = mercado_sales_prophet_forecast.loc["2020-07-01":"2020-09-30"]
 
-# Update the column names for the forecast_quarter DataFrame 
-# to match what the finance division is looking for 
+# Update the column names for the forecast_quarter DataFrame to match what the finance division is looking for 
 mercado_sales_forecast_quarter = mercado_sales_forecast_quarter.rename(columns= {"yhat": "Mostly likely", "yhat_upper": "Best Case", "yhat_lower": "Worst Case"})
 
 # Displayed the summed values for all the rows in the forecast_quarter DataFrame
