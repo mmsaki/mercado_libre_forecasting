@@ -1,5 +1,3 @@
-<img src="https://i.ytimg.com/vi/T60rJEGToLU/maxresdefault.jpg" alt="drawing" width="100%"/>
-
 # Prophet Forecasting for MercadoLibre
 
 ## Table of Contents
